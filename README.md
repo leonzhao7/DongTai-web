@@ -22,7 +22,7 @@ vulnerability mining personnel. It can be used to integrate Devops environment f
 1. Install `NPM` dependency
 
 ```bash
-$ npm install
+$ npm install -g node@16
 ```
 
 2. Modify local configuration file

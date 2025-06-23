@@ -8,6 +8,7 @@
     "lint": "eslint --ext .js,.vue src --fix"
   },
   "dependencies": {
+    "16": "^0.0.2",
     "@antv/g6": "4.1.11",
     "@innologica/vue-dropdown-menu": "^0.1.4",
     "@types/sortablejs": "^1.13.0",
