@@ -7,10 +7,6 @@
           <i class="iconfont icondaochu-5"></i>
           {{ $t('log.exportBtn') }}
         </el-button>
-        <el-button type="text" class="btn" @click="deleteDialogShow">
-          <i class="iconfont iconshanchu-6"></i>
-          {{ $t('log.deleteBtn') }}
-        </el-button>
         <el-button type="text" class="btn" @click="clearDialogOpen = true">
           <i class="iconfont icon7-7xiaochugeshi"></i>
           {{ $t('log.clearBtn') }}
@@ -30,16 +26,36 @@
       <el-table-column
         :label="$t('log.username')"
         prop="username"
-        width="200px"
-      ></el-table-column>
-      <el-table-column
-        :label="$t('log.handle')"
-        prop="change_message"
+        width="80px"
       ></el-table-column>
       <el-table-column
         :label="$t('log.handleTime')"
         prop="action_time"
-        width="170px"
+        width="120px"
+      ></el-table-column>
+      <el-table-column
+        :label="$t('log.clientIp')"
+        prop="client_ip"
+        width="100px"
+      ></el-table-column>
+      <el-table-column
+        :label="$t('log.method')"
+        prop="method"
+        width="60px"
+      ></el-table-column>
+      <el-table-column
+        :label="$t('log.url')"
+        prop="url"
+      ></el-table-column>
+      <el-table-column
+        :label="$t('log.replyCode')"
+        prop="reply_code"
+        width="65px"
+      ></el-table-column>
+      <el-table-column
+        :label="$t('log.replyMsg')"
+        prop="reply_msg"
+        width="120px"
       ></el-table-column>
     </el-table>
     <div class="flex-row-space-between">
@@ -59,36 +75,12 @@
       ></el-pagination>
     </div>
     <el-dialog
-      :visible.sync="deleteDialogOpen"
-      :title="$t('log.deleteTitle')"
-      width="25%"
-    >
-      <div style="text-align: center">
-        <p style="color: #959fb4">{{ $t('log.deleteInfo') }}</p>
-        <p style="color: #959fb4; margin-top: 14px">
-          {{ $t('log.deleteDesc') }}
-        </p>
-      </div>
-      <div slot="footer" style="text-align: center">
-        <el-button type="text" class="confirmDel" @click="logDelete">
-          {{ $t('log.deleteEnter') }}
-        </el-button>
-        <el-button
-          type="text"
-          class="cancelDel"
-          @click="deleteDialogOpen = false"
-        >
-          {{ $t('log.deleteClear') }}
-        </el-button>
-      </div>
-    </el-dialog>
-    <el-dialog
       :visible.sync="clearDialogOpen"
       :title="$t('log.clearTitle')"
       width="25%"
     >
       <div style="text-align: center">
-        <p style="color: #959fb4">{{ $t('log.deleteInfo') }}</p>
+        <p style="color: #959fb4">{{ $t('log.clearInfo') }}</p>
         <p style="color: #959fb4; margin-top: 14px">
           {{ $t('log.clearDesc') }}
         </p>
@@ -116,7 +108,6 @@ import { LogItem } from './types'
 
 @Component({ name: 'LogManage' })
 export default class LogManage extends VueBase {
-  private deleteDialogOpen = false
   private clearDialogOpen = false
   private page = 1
   private pageSize = 20
@@ -177,39 +168,6 @@ export default class LogManage extends VueBase {
     this.total = total
   }
 
-  private deleteDialogShow() {
-    if (this.selectIdSet.length <= 0) {
-      this.$message({
-        showClose: true,
-        message: this.$t('log.choseLog') as string,
-        type: 'error',
-      })
-      return
-    }
-    this.deleteDialogOpen = true
-  }
-  private async logDelete() {
-    const params = {
-      ids: this.selectIdSet.join(','),
-    }
-    const { status, msg } = await this.services.setting.logDelete(params)
-    if (status !== 201) {
-      this.$message({
-        type: 'error',
-        message: msg,
-        showClose: true,
-      })
-      return
-    }
-    this.$message({
-      type: 'success',
-      message: msg,
-      showClose: true,
-    })
-    this.deleteDialogOpen = false
-    this.selectAllPage = false
-    await this.getTableData()
-  }
   private async logClear() {
     const { status, msg } = await this.services.setting.logClear()
     if (status !== 201) {
