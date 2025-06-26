@@ -38,6 +38,48 @@
                   :placeholder="$t('views.projectEdit.namePlaceholder')"
                 ></el-input>
               </el-form-item>
+              <el-form-item :label="$t('views.projectEdit.scan')" prop="scanId">
+                <div class="scan-line">
+                  <el-select
+                    v-model="submitForm.scanId"
+                    style="width: 390px"
+                    :placeholder="$t('views.projectEdit.scanPlaceholder')"
+                    @change="agentChange"
+                  >
+                    <el-option
+                      v-for="item in strategyList"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    ></el-option>
+                  </el-select>
+                  <i
+                    class="el-icon-circle-plus-outline addStrategyIcon"
+                    @click="scanAddDialogShow"
+                  >
+                    {{ $t('views.projectEdit.scanAdd') }}
+                  </i>
+                </div>
+              </el-form-item>
+              <el-form-item
+                :label="$t('views.deploy.projectTemplate')"
+                prop="template_id"
+              >
+                <el-select
+                  v-model="submitForm.template_id"
+                  class="addUserInput"
+                  clearable
+                  style="width: 390px"
+                >
+                  <el-option
+                    v-for="(item, index) in projectList"
+                    :key="index"
+                    :label="item.template_name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+
               <el-form-item
                 :label="$t('views.deploy.openLog')"
                 prop="enable_log"
@@ -198,6 +240,47 @@
                   style="width: 500px"
                   :placeholder="$t('views.projectEdit.namePlaceholder')"
                 ></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('views.projectEdit.scan')" prop="scanId">
+                <div class="scan-line">
+                  <el-select
+                    v-model="submitForm.scanId"
+                    style="width: 390px"
+                    :placeholder="$t('views.projectEdit.scanPlaceholder')"
+                    @change="agentChange"
+                  >
+                    <el-option
+                      v-for="item in strategyList"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    ></el-option>
+                  </el-select>
+                  <i
+                    class="el-icon-circle-plus-outline addStrategyIcon"
+                    @click="scanAddDialogShow"
+                  >
+                    {{ $t('views.projectEdit.scanAdd') }}
+                  </i>
+                </div>
+              </el-form-item>
+              <el-form-item
+                :label="$t('views.deploy.projectTemplate')"
+                prop="template_id"
+              >
+                <el-select
+                  v-model="submitForm.template_id"
+                  class="addUserInput"
+                  clearable
+                  style="width: 390px"
+                >
+                  <el-option
+                    v-for="(item, index) in projectList"
+                    :key="index"
+                    :label="item.template_name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
               </el-form-item>
               <el-form-item
                 :label="$t('views.deploy.openLog')"
@@ -442,29 +525,34 @@ export default class ProjectEdit extends VueBase {
   private type = '1'
   private advanced = false
   private departmentList = []
+  private projectList = []
   private radio = ''
   private submitForm: {
     name: string
     mode: string
     agentIdList: Array<number>
+    scanId: number | undefined
     version_name: string
     description: string
     vul_validation: number
     base_url: string
     test_req_header_key: string
     test_req_header_value: string
+    template_id: any
     log_level: any
     enable_log: any
   } = {
     name: '',
     mode: this.$t('views.projectEdit.mode1') as string,
     agentIdList: [],
+    scanId: undefined,
     version_name: '',
     description: '',
     vul_validation: 0,
     base_url: '',
     test_req_header_key: '',
     test_req_header_value: '',
+    template_id: '',
     log_level: '',
     enable_log: '',
   }
@@ -496,8 +584,21 @@ export default class ProjectEdit extends VueBase {
         trigger: 'blur',
       },
     ],
+    scanId: [
+      {
+        required: true,
+        message: this.$t('views.projectEdit.scanPlaceholder'),
+        trigger: 'change',
+      },
+    ],
+    template_id: [
+      {
+        required: true,
+        message: this.$t('views.projectEdit.templatePlaceholder'),
+        trigger: 'change',
+      },
+    ],
   }
-
   private scanAddDialogOpen = false
   private scanForm: {
     ids: Array<number>
@@ -529,12 +630,24 @@ export default class ProjectEdit extends VueBase {
     }
     this.$message.error(res.msg)
   }
+  private async getListProjecttemplat() {
+    const res = await this.services.setting.listProjecttemplat({
+      page: 1,
+      page_size: 100,
+    })
+    if (res.status === 201) {
+      this.projectList = res.data
+      return
+    }
+    this.$message.error(res.msg)
+  }
   async created() {
     if (this.$route.params.pid) {
       this.newEdit = true
     }
     await this.getEngineList()
     await this.getListDepartment()
+    await this.getListProjecttemplat()
     await this.strategyUserList()
     if (this.$route.params.pid) {
       await this.projectDetail()
@@ -575,12 +688,14 @@ export default class ProjectEdit extends VueBase {
     this.submitForm.agentIdList = data.agents.map((item: { id: any }) => {
       return item.id
     })
+    this.submitForm.scanId = data.scan_id
     this.submitForm.version_name = data.versionData?.version_name
     this.submitForm.description = data.versionData?.description
     this.submitForm.vul_validation = data.vul_validation
     this.submitForm.base_url = data.base_url
     this.submitForm.test_req_header_key = data.test_req_header_key
     this.submitForm.test_req_header_value = data.test_req_header_value
+    this.submitForm.template_id = data.template_id
     this.submitForm.enable_log = data.enable_log
     this.submitForm.log_level = data.log_level
     this.agentChange()

@@ -789,6 +789,20 @@ export default class Deploy extends VueBase {
     }
   }
 
+  private async getListProjecttemplat() {
+    const res = await this.services.setting.listProjecttemplat({
+      page: 1,
+      page_size: 100,
+    })
+    if (res.status === 201) {
+      this.projectList = res.data
+      this.defaultTemplate = res.data[res.data.length - 1]?.id || ''
+      this.agentForm.projectTemplate = this.defaultTemplate
+      return
+    }
+    this.$message.error(res.msg)
+  }
+
   private async getUserToken() {
     const res = await this.services.user.userToken()
     if (res.status === 201) {
@@ -799,6 +813,7 @@ export default class Deploy extends VueBase {
   private async created() {
     this.agentForm.entryName = 'Demo Project'
     this.agentForm.version = 'V1.0'
+    await this.getListProjecttemplat()
     await this.getMd()
     await this.getDoc()
     this.getUserToken()
