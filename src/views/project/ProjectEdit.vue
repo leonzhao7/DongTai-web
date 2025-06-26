@@ -849,6 +849,7 @@ export default class ProjectEdit extends VueBase {
     }
     this.scanAddDialogOpen = false
     this.strategyUserList()
+    this.submitForm.scanId = data.id
   }
 
   private agentChange() {
@@ -881,6 +882,7 @@ export default class ProjectEdit extends VueBase {
           name: string
           mode: string | any
           agent_ids: string
+	  scan_id: number
           pid?: string
           version_name: string | undefined
           description: string | undefined
@@ -888,12 +890,14 @@ export default class ProjectEdit extends VueBase {
           base_url: string
           test_req_header_key: string
           test_req_header_value: string
+	  template_id: any
           enable_log: any
           log_level: any
         } = {
           name: this.submitForm.name,
           mode: this.submitForm.mode,
           agent_ids: this.submitForm.agentIdList.join(','),
+	  scan_id: this.submitForm.scanId as number,
           version_name: this.submitForm.version_name
             ? this.submitForm.version_name
             : undefined,
@@ -904,6 +908,7 @@ export default class ProjectEdit extends VueBase {
           base_url: this.submitForm.base_url,
           test_req_header_key: this.submitForm.test_req_header_key,
           test_req_header_value: this.submitForm.test_req_header_value,
+	  template_id: this.submitForm.template_id,
           enable_log: this.submitForm.enable_log,
           log_level: this.submitForm.log_level,
         }
