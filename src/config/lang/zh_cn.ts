@@ -973,6 +973,8 @@ export default {
       name: '项目名称',
       namePlaceholder:
         '格式：中文、英文字母大小写、数字、@等组合，长度20以内，名称保证唯一',
+      base_url: '基础URL',
+      baseUrlPlaceholder: '项目的基础URL：http://127.0.0.1:8080/',
       mode: '扫描模式',
       mode1: '插桩模式',
       mode2: '流量模式',

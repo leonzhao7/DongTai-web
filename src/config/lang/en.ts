@@ -974,6 +974,8 @@ export default {
       name: 'Application Name',
       namePlaceholder:
         'The application name must be less than 20 characters which included:Chinese characters, uppercase/lowercase letter, digit and symbol',
+      base_url: 'Base URL',
+      namePlaceholder: 'Base URL: http://127.0.0.1:8080/',
       mode: 'Scan Mode',
       mode1: 'Instrumentation Mode',
       mode2: 'Traffic mode',

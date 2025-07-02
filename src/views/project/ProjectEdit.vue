@@ -79,7 +79,13 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-
+              <el-form-item :label="$t('views.projectEdit.base_url')" prop="base_url">
+                <el-input
+                  v-model="submitForm.base_url"
+                  style="width: 500px"
+                  :placeholder="$t('views.projectEdit.baseUrlPlaceholder')"
+                ></el-input>
+              </el-form-item>
               <el-form-item
                 :label="$t('views.deploy.openLog')"
                 prop="enable_log"
@@ -281,6 +287,13 @@
                     :value="item.id"
                   ></el-option>
                 </el-select>
+              </el-form-item>
+              <el-form-item :label="$t('views.projectEdit.base_url')" prop="base_url">
+                <el-input
+                  v-model="submitForm.base_url"
+                  style="width: 500px"
+                  :placeholder="$t('views.projectEdit.baseUrlPlaceholder')"
+                ></el-input>
               </el-form-item>
               <el-form-item
                 :label="$t('views.deploy.openLog')"
