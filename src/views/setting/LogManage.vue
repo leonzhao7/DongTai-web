@@ -31,7 +31,7 @@
       <el-table-column
         :label="$t('log.handleTime')"
         prop="action_time"
-        width="120px"
+        width="160px"
       ></el-table-column>
       <el-table-column
         :label="$t('log.clientIp')"
@@ -46,11 +46,6 @@
       <el-table-column
         :label="$t('log.url')"
         prop="url"
-      ></el-table-column>
-      <el-table-column
-        :label="$t('log.replyCode')"
-        prop="reply_code"
-        width="65px"
       ></el-table-column>
       <el-table-column
         :label="$t('log.replyMsg')"
