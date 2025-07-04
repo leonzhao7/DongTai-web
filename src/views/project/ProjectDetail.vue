@@ -97,7 +97,7 @@
           <i class="el-icon-menu" style="line-height: 8px"></i>
           {{ $t('views.projectDetail.projectComponent') }}
         </el-button>
-        <!-- <el-button
+        <el-button
           v-if="showApiListFlag"
           type="text"
           class="pTab"
@@ -106,7 +106,7 @@
         >
           <i class="iconfont iconzhongjianjian" style="line-height: 8px"></i>
           {{ $t('views.projectDetail.apiList') }}
-        </el-button> -->
+        </el-button>
       </div>
       <template v-if="projectObj.versionData.version_id">
         <div v-if="selectTab === 'desc'">
@@ -347,7 +347,7 @@ export default class ProjectDetail extends VueBase {
     versionData: {},
     agent_languag: [],
   }
-  private showApiListFlag = false
+  private showApiListFlag = true
   private versionTemp: any = {}
   private versionList: any[] = []
   private versionFlag = false
