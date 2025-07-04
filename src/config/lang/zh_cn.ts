@@ -99,6 +99,7 @@ export default {
     vulnList: '应用漏洞列表',
     vulnDetail: '应用漏洞详情',
     sca: '组件',
+    api: 'API导航',
     scaList: '组件管理列表',
     scalistDetail: '组件详情',
     scaDetail: '组件管理详情',

@@ -117,6 +117,31 @@ const routes: Array<RouteConfig> = [
     ],
   },
   {
+    path: '/api',
+    name: 'api',
+    redirect: '/api/apiList',
+    meta: {
+      disabled: true,
+      isMenu: true,
+      i18n: 'menu.api',
+      name: i18n.t('menu.api'),
+    },
+    component: () => import('@/views/api/Index.vue'),
+    children: [
+      {
+        path: 'apiList',
+        name: 'apiList',
+        meta: {
+          disabled: true,
+          isMenu: true,
+          i18n: 'menu.apiList',
+          name: i18n.t('menu.apiList'),
+        },
+        component: () => import('@/views/api/ApiList.vue'),
+      },
+    ],
+  },
+  {
     path: '/vuln',
     name: 'vuln',
     redirect: '/vuln/vulnList',
@@ -259,6 +284,7 @@ const routes: Array<RouteConfig> = [
     path: 'sysInfo',
     name: 'sysInfo',
     meta: {
+      isMenu: true,
       keepAlive: true,
       i18n: 'menu.sysInfo',
       name: i18n.t('menu.sysInfo'),
@@ -493,6 +519,31 @@ const adminRoutes: Array<RouteConfig> = [
           name: i18n.t('menu.projectDetail'),
         },
         component: () => import('@/views/project/ProjectDetail.vue'),
+      },
+    ],
+  },
+  {
+    path: '/api',
+    name: 'api',
+    redirect: '/api/apiList',
+    meta: {
+      disabled: true,
+      isMenu: true,
+      i18n: 'menu.api',
+      name: i18n.t('menu.api'),
+    },
+    component: () => import('@/views/api/Index.vue'),
+    children: [
+      {
+        path: 'apiList',
+        name: 'apiList',
+        meta: {
+          disabled: true,
+          isMenu: true,
+          i18n: 'menu.apiList',
+          name: i18n.t('menu.apiList'),
+        },
+        component: () => import('@/views/api/ApiList.vue'),
       },
     ],
   },
