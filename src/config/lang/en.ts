@@ -1008,6 +1008,8 @@ export default {
       name: 'Name',
       type: 'Type',
       extra: 'Extra',
+      format: 'Format',
+      location: 'Location',
       response: 'Response',
       unlimited: 'Unlimited',
       covered: 'Covered',

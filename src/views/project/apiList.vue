@@ -126,37 +126,226 @@
                 >
               </div>
             </div>
-            <el-table :data="item.parameters" style="width: 100%">
-              <el-table-column
-                prop="name"
-                :label="$t('views.apiList.name')"
-                width="180"
-              >
-              </el-table-column>
-              <el-table-column
-                prop="parameter_type"
-                :label="$t('views.apiList.type')"
-                width="180"
-              >
-                <template slot-scope="scope">
-                  <el-tooltip
-                    effect="light"
-                    :content="scope.row.parameter_type"
-                    placement="top"
+            <div v-if="item.showParameters">
+              <!-- 表头行 -->
+              <div class="parameter-header-row">
+                <div class="header-cell name-cell">
+                  {{ $t('views.apiList.name') }}
+                </div>
+                <div class="header-cell type-cell">
+                  {{ $t('views.apiList.type') }}
+                </div>
+                <div class="header-cell extra-cell">
+                  {{ $t('views.apiList.format') }}
+                </div>
+                <div class="header-cell location-cell">
+                  {{ $t('views.apiList.location') }}
+                </div>
+                <div class="header-cell expand-cell"></div>
+              </div>
+              
+              <!-- 参数行 -->
+              <div v-for="param in item.parameters" :key="param.id">
+                <div 
+                  class="parameter-data-row" 
+                  :class="{ 
+                    'non-leaf': param.hasChildren, 
+                    'leaf': !param.hasChildren
+                  }"
+                  @click="param.hasChildren ? toggleParameter(param) : null"
+                >
+                  <div class="data-cell name-cell" :style="{ paddingLeft: (param.level || 0) * 20 + 'px' }">
+                    {{ param.name }}
+                  </div>
+                  <div class="data-cell type-cell">
+                    <el-tooltip
+                      effect="light"
+                      :content="param.parameter_type"
+                      placement="top"
+                    >
+                      <span>
+                        {{ param.parameter_type_shortcut }}
+                      </span>
+                    </el-tooltip>
+                  </div>
+                  <div class="data-cell extra-cell">
+                    {{ param.format}}
+                  </div>
+                  <div class="data-cell location-cell">
+                    {{ param.in}}
+                  </div>
+                  <div class="data-cell expand-cell">
+                    <i 
+                      v-if="param.hasChildren"
+		      :class="param.expanded ? 'el-icon-arrow-down' : 'el-icon-arrow-right'"
+                    ></i>
+                    <i 
+                      v-else
+                      class="el-icon-document"
+                      style="color: #909399"
+                    ></i>
+                  </div>
+                </div>
+                
+                <!-- 子参数行 -->
+                <div 
+                  v-if="param.expanded && param.children && param.children.length > 0"
+                  class="child-parameters"
+                >
+                  <!-- 直接在组件内部递归渲染子参数 -->
+                  <div 
+                    v-for="(child, childIndex) in param.children" 
+                    :key="childIndex"
                   >
-                    <span>
-                      {{ scope.row.parameter_type_shortcut }}
-                    </span>
-                  </el-tooltip>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="annotation"
-                :label="$t('views.apiList.extra')"
-                min-width="180"
-              >
-              </el-table-column>
-            </el-table>
+                    <div 
+                      class="parameter-data-row" 
+                      :class="{ 
+                        'non-leaf': child.hasChildren, 
+                        'leaf': !child.hasChildren
+                      }"
+                      @click="child.hasChildren ? toggleParameter(child) : null"
+                    >
+                      <div class="data-cell name-cell" :style="{ paddingLeft: ((param.level || 0) + 1) * 20 + 'px' }">
+                        {{ child.name }}
+                      </div>
+                      <div class="data-cell type-cell">
+                        <el-tooltip
+                          effect="light"
+                          :content="child.parameter_type"
+                          placement="top"
+                        >
+                          <span>
+                            {{ child.parameter_type_shortcut }}
+                          </span>
+                        </el-tooltip>
+                      </div>
+                      <div class="data-cell extra-cell">
+                        {{ child.format}}
+                      </div>
+                      <div class="data-cell location-cell">
+                        {{ child.in}}
+                      </div>
+                      <div class="data-cell expand-cell">
+                        <i 
+                          v-if="child.hasChildren"
+			  :class="param.expanded ? 'el-icon-arrow-down' : 'el-icon-arrow-right'"
+                        ></i>
+                        <i 
+                          v-else
+                          class="el-icon-document"
+                          style="color: #909399"
+                        ></i>
+                      </div>
+                    </div>
+                    
+                    <!-- 递归渲染更深层级的子参数 -->
+                    <div 
+                      v-if="child.expanded && child.children && child.children.length > 0"
+                      class="child-parameters"
+                    >
+                      <div 
+                        v-for="(grandChild, grandChildIndex) in child.children" 
+                        :key="grandChildIndex"
+                      >
+                        <div 
+                          class="parameter-data-row" 
+                          :class="{ 
+                            'non-leaf': grandChild.hasChildren, 
+                            'leaf': !grandChild.hasChildren
+                          }"
+                          @click="grandChild.hasChildren ? toggleParameter(grandChild) : null"
+                        >
+                          <div class="data-cell name-cell" :style="{ paddingLeft: ((param.level || 0) + 2) * 20 + 'px' }">
+                            {{ grandChild.name }}
+                          </div>
+                          <div class="data-cell type-cell">
+                            <el-tooltip
+                              effect="light"
+                              :content="grandChild.parameter_type"
+                              placement="top"
+                            >
+                              <span>
+                                {{ grandChild.parameter_type_shortcut }}
+                              </span>
+                            </el-tooltip>
+                          </div>
+                          <div class="data-cell extra-cell">
+                            {{ grandChild.format}}
+                          </div>
+                          <div class="data-cell location-cell">
+                            {{ grandChild.in}}
+                          </div>
+                          <div class="data-cell expand-cell">
+                            <i 
+                              v-if="grandChild.hasChildren"
+			      :class="param.expanded ? 'el-icon-arrow-down' : 'el-icon-arrow-right'"
+                            ></i>
+                            <i 
+                              v-else
+                              class="el-icon-document"
+                              style="color: #909399"
+                            ></i>
+                          </div>
+                        </div>
+                        
+                        <!-- 可以继续嵌套，但通常三层足够 -->
+                        <div 
+                          v-if="grandChild.expanded && grandChild.children && grandChild.children.length > 0"
+                          class="child-parameters"
+                        >
+                          <!-- 处理更深层级的子参数 -->
+                          <div 
+                            v-for="(greatGrandChild, greatGrandChildIndex) in grandChild.children" 
+                            :key="greatGrandChildIndex"
+                          >
+                            <div 
+                              class="parameter-data-row" 
+                              :class="{ 
+                                'non-leaf': greatGrandChild.hasChildren, 
+                                'leaf': !greatGrandChild.hasChildren
+                              }"
+                              @click="greatGrandChild.hasChildren ? toggleParameter(greatGrandChild) : null"
+                            >
+                              <div class="data-cell name-cell" :style="{ paddingLeft: ((param.level || 0) + 3) * 20 + 'px' }">
+                                {{ greatGrandChild.name }}
+                              </div>
+                              <div class="data-cell type-cell">
+                                <el-tooltip
+                                  effect="light"
+                                  :content="greatGrandChild.parameter_type"
+                                  placement="top"
+                                >
+                                  <span>
+                                    {{ greatGrandChild.parameter_type_shortcut }}
+                                  </span>
+                                </el-tooltip>
+                              </div>
+                              <div class="data-cell extra-cell">
+                                {{ greatGrandChild.format}}
+                              </div>
+                              <div class="data-cell location-cell">
+                                {{ greatGrandChild.in}}
+                              </div>
+                              <div class="data-cell expand-cell">
+                                <i 
+                                  v-if="greatGrandChild.hasChildren"
+				  :class="param.expanded ? 'el-icon-arrow-down' : 'el-icon-arrow-right'"
+                                ></i>
+                                <i 
+                                  v-else
+                                  class="el-icon-document"
+                                  style="color: #909399"
+                                ></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="table-foot">
               <span class="res"> {{ $t('views.apiList.response') }} </span>
               <el-tooltip
@@ -196,7 +385,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import VueBase from '../../VueBase'
 import SearchCard from '@/views/taint/searchCard.vue'
 @Component({
@@ -221,6 +410,7 @@ export default class Index extends VueBase {
   private coverCount = ''
   private openCollapse = [0]
   private apiList = []
+  
   private getColor(type: string) {
     switch (type) {
       case 'GET':
@@ -235,6 +425,7 @@ export default class Index extends VueBase {
         return { borderColor: '#909399', bgColor: '#EBEEF5' }
     }
   }
+  
   private getType(type: string) {
     switch (type) {
       case 'GET':
@@ -249,6 +440,7 @@ export default class Index extends VueBase {
         return 'iast-tag-other'
     }
   }
+  
   private async startView(item: any) {
     if (item.showSend) {
       item.showSend = false
@@ -273,6 +465,7 @@ export default class Index extends VueBase {
         item.showSend = true
       })
   }
+  
   private startSend(item: any) {
     if (item.showSend) {
       item.showSend = false
@@ -281,6 +474,7 @@ export default class Index extends VueBase {
       item.showSend = true
     })
   }
+  
   private async getApiList() {
     this.loadingStart()
     const ids = this.apiList.map((item: any) => {
@@ -301,11 +495,12 @@ export default class Index extends VueBase {
       this.$message.error(res.msg)
     }
     const apiList = res.data.map((item: any) => {
+      const processedParams = this.processParameters(item.parameters)
       return {
         id: item.id,
         agent: item.agent,
         poolId: -1,
-        parameters: item.parameters,
+        parameters: processedParams,
         path: item.path,
         vulnerablities: item.vulnerablities,
         method: item.method.apimethod,
@@ -320,6 +515,7 @@ export default class Index extends VueBase {
         res_header: '',
         res_body: '',
         showSend: false,
+        showParameters: true // 默认显示参数列表
       }
     })
     this.apiList = this.apiList.concat(apiList)
@@ -328,8 +524,42 @@ export default class Index extends VueBase {
     }
   }
 
+  // 处理参数，构建树形结构
+  private processParameters(parameters: any[]) {
+    // 创建参数ID到参数的映射
+    const idMap: { [id: number]: any } = {}
+    
+    // 首先将所有参数放入映射中，并添加必要的属性
+    parameters.forEach(param => {
+      idMap[param.id] = {
+        ...param,
+        expanded: false, // 控制子参数是否展开
+        level: 0, // 层级深度
+        children: [], // 子参数数组
+        hasChildren: false // 是否有子参数
+      }
+    })
+    
+    // 构建树形结构
+    const rootParameters: any[] = []
+    parameters.forEach(param => {
+      const processedParam = idMap[param.id]
+      
+      // 如果参数有父级，将其添加到父级的children中
+      if (param.parent !== null && param.parent !== undefined && idMap[param.parent]) {
+        idMap[param.parent].children.push(processedParam)
+        idMap[param.parent].hasChildren = true
+        processedParam.level = idMap[param.parent].level + 1
+      } else {
+        // 没有父级的参数作为根参数
+        rootParameters.push(processedParam)
+      }
+    })
+    
+    return rootParameters
+  }
+
   private searchChange() {
-    // First filter the front-end to meet the conditions, and then request the back-end to prevent excessive pressure on the database
     this.apiList = this.apiList.filter(
       (item: any) =>
         item.method.indexOf(this.searchObj.method) > -1 &&
@@ -377,6 +607,11 @@ export default class Index extends VueBase {
         this.getApiList()
       }
     }
+  }
+
+  // 切换参数的展开/折叠状态
+  private toggleParameter(param: any) {
+    param.expanded = !param.expanded
   }
 }
 </script>
@@ -506,6 +741,93 @@ export default class Index extends VueBase {
     padding-left: 6px;
     padding-top: 6px;
     padding-right: 6px;
+  }
+  
+  /* 参数表格样式 */
+  .parameter-header-row {
+    display: flex;
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    
+    .header-cell {
+      padding: 4px;
+    }
+    
+    .name-cell {
+      flex: 2;
+    }
+    
+    .type-cell {
+      flex: 1;
+    }
+    
+    .location-cell {
+      flex: 1;
+    }
+    
+    .extra-cell {
+      flex: 1;
+    }
+    
+    .expand-cell {
+      width: 30px;
+      text-align: center;
+    }
+  }
+  
+  .parameter-data-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: #f0f0f0;
+    }
+    
+    &.non-leaf {
+      cursor: pointer;
+    }
+    
+    &.leaf {
+      cursor: default;
+      background-color: #ffffff;
+    }
+    
+    .data-cell {
+      padding: 4px;
+    }
+    
+    .name-cell {
+      flex: 2;
+    }
+    
+    .type-cell {
+      flex: 1;
+    }
+    
+    .location-cell {
+      flex: 1;
+    }
+    
+    .extra-cell {
+      flex: 1;
+    }
+    
+    .expand-cell {
+      width: 30px;
+      text-align: center;
+    }
+  }
+  
+  /* 子参数样式 */
+  .child-parameters {
+    margin-left: 20px;
+    border-left: 1px dashed #eee;
   }
 }
 </style>

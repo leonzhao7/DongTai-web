@@ -1008,6 +1008,8 @@ export default {
       name: '名称',
       type: '类型',
       extra: '额外信息',
+      format: '格式',
+      location: '位置',
       response: '响应',
       unlimited: '不限',
       covered: '已覆盖',
