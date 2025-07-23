@@ -144,218 +144,24 @@
                 <div class="header-cell expand-cell"></div>
               </div>
               
-              <!-- 参数行 -->
-              <div v-for="param in item.parameters" :key="param.id">
-                <div 
-                  class="parameter-data-row" 
-                  :class="{ 
-                    'non-leaf': param.hasChildren, 
-                    'leaf': !param.hasChildren
-                  }"
-                  @click="param.hasChildren ? toggleParameter(param) : null"
-                >
-                  <div class="data-cell name-cell" :style="{ paddingLeft: (param.level || 0) * 20 + 'px' }">
-                    {{ param.name }}
-                  </div>
-                  <div class="data-cell type-cell">
-                    <el-tooltip
-                      effect="light"
-                      :content="param.parameter_type"
-                      placement="top"
-                    >
-                      <span>
-                        {{ param.parameter_type_shortcut }}
-                      </span>
-                    </el-tooltip>
-                  </div>
-                  <div class="data-cell extra-cell">
-                    {{ param.format}}
-                  </div>
-                  <div class="data-cell location-cell">
-                    {{ param.in}}
-                  </div>
-                  <div class="data-cell expand-cell">
-                    <i 
-                      v-if="param.hasChildren"
-		      :class="param.expanded ? 'el-icon-arrow-down' : 'el-icon-arrow-right'"
-                    ></i>
-                    <i 
-                      v-else
-                      class="el-icon-document"
-                      style="color: #909399"
-                    ></i>
-                  </div>
-                </div>
-                
-                <!-- 子参数行 -->
-                <div 
-                  v-if="param.expanded && param.children && param.children.length > 0"
-                  class="child-parameters"
-                >
-                  <!-- 直接在组件内部递归渲染子参数 -->
-                  <div 
-                    v-for="(child, childIndex) in param.children" 
-                    :key="childIndex"
-                  >
-                    <div 
-                      class="parameter-data-row" 
-                      :class="{ 
-                        'non-leaf': child.hasChildren, 
-                        'leaf': !child.hasChildren
-                      }"
-                      @click="child.hasChildren ? toggleParameter(child) : null"
-                    >
-                      <div class="data-cell name-cell" :style="{ paddingLeft: ((param.level || 0) + 1) * 20 + 'px' }">
-                        {{ child.name }}
-                      </div>
-                      <div class="data-cell type-cell">
-                        <el-tooltip
-                          effect="light"
-                          :content="child.parameter_type"
-                          placement="top"
-                        >
-                          <span>
-                            {{ child.parameter_type_shortcut }}
-                          </span>
-                        </el-tooltip>
-                      </div>
-                      <div class="data-cell extra-cell">
-                        {{ child.format}}
-                      </div>
-                      <div class="data-cell location-cell">
-                        {{ child.in}}
-                      </div>
-                      <div class="data-cell expand-cell">
-                        <i 
-                          v-if="child.hasChildren"
-			  :class="param.expanded ? 'el-icon-arrow-down' : 'el-icon-arrow-right'"
-                        ></i>
-                        <i 
-                          v-else
-                          class="el-icon-document"
-                          style="color: #909399"
-                        ></i>
-                      </div>
-                    </div>
-                    
-                    <!-- 递归渲染更深层级的子参数 -->
-                    <div 
-                      v-if="child.expanded && child.children && child.children.length > 0"
-                      class="child-parameters"
-                    >
-                      <div 
-                        v-for="(grandChild, grandChildIndex) in child.children" 
-                        :key="grandChildIndex"
-                      >
-                        <div 
-                          class="parameter-data-row" 
-                          :class="{ 
-                            'non-leaf': grandChild.hasChildren, 
-                            'leaf': !grandChild.hasChildren
-                          }"
-                          @click="grandChild.hasChildren ? toggleParameter(grandChild) : null"
-                        >
-                          <div class="data-cell name-cell" :style="{ paddingLeft: ((param.level || 0) + 2) * 20 + 'px' }">
-                            {{ grandChild.name }}
-                          </div>
-                          <div class="data-cell type-cell">
-                            <el-tooltip
-                              effect="light"
-                              :content="grandChild.parameter_type"
-                              placement="top"
-                            >
-                              <span>
-                                {{ grandChild.parameter_type_shortcut }}
-                              </span>
-                            </el-tooltip>
-                          </div>
-                          <div class="data-cell extra-cell">
-                            {{ grandChild.format}}
-                          </div>
-                          <div class="data-cell location-cell">
-                            {{ grandChild.in}}
-                          </div>
-                          <div class="data-cell expand-cell">
-                            <i 
-                              v-if="grandChild.hasChildren"
-			      :class="param.expanded ? 'el-icon-arrow-down' : 'el-icon-arrow-right'"
-                            ></i>
-                            <i 
-                              v-else
-                              class="el-icon-document"
-                              style="color: #909399"
-                            ></i>
-                          </div>
-                        </div>
-                        
-                        <!-- 可以继续嵌套，但通常三层足够 -->
-                        <div 
-                          v-if="grandChild.expanded && grandChild.children && grandChild.children.length > 0"
-                          class="child-parameters"
-                        >
-                          <!-- 处理更深层级的子参数 -->
-                          <div 
-                            v-for="(greatGrandChild, greatGrandChildIndex) in grandChild.children" 
-                            :key="greatGrandChildIndex"
-                          >
-                            <div 
-                              class="parameter-data-row" 
-                              :class="{ 
-                                'non-leaf': greatGrandChild.hasChildren, 
-                                'leaf': !greatGrandChild.hasChildren
-                              }"
-                              @click="greatGrandChild.hasChildren ? toggleParameter(greatGrandChild) : null"
-                            >
-                              <div class="data-cell name-cell" :style="{ paddingLeft: ((param.level || 0) + 3) * 20 + 'px' }">
-                                {{ greatGrandChild.name }}
-                              </div>
-                              <div class="data-cell type-cell">
-                                <el-tooltip
-                                  effect="light"
-                                  :content="greatGrandChild.parameter_type"
-                                  placement="top"
-                                >
-                                  <span>
-                                    {{ greatGrandChild.parameter_type_shortcut }}
-                                  </span>
-                                </el-tooltip>
-                              </div>
-                              <div class="data-cell extra-cell">
-                                {{ greatGrandChild.format}}
-                              </div>
-                              <div class="data-cell location-cell">
-                                {{ greatGrandChild.in}}
-                              </div>
-                              <div class="data-cell expand-cell">
-                                <i 
-                                  v-if="greatGrandChild.hasChildren"
-				  :class="param.expanded ? 'el-icon-arrow-down' : 'el-icon-arrow-right'"
-                                ></i>
-                                <i 
-                                  v-else
-                                  class="el-icon-document"
-                                  style="color: #909399"
-                                ></i>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <!-- 递归渲染参数 -->
+              <ParameterRecursive 
+                :parameters="item.parameters" 
+                :max-level="4" 
+                :current-level="0"
+                @toggle="toggleParameter"
+              />
             </div>
             <div class="table-foot">
               <span class="res"> {{ $t('views.apiList.response') }} </span>
               <el-tooltip
                 class="item"
                 effect="light"
-                :content="item.return_type"
+                :content="item.type"
                 placement="top"
               >
                 <span>
-                  {{ item.return_type_shortcut }}
+                  {{ item.type_shortcut }}
                 </span>
               </el-tooltip>
             </div>
@@ -388,10 +194,93 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import VueBase from '../../VueBase'
 import SearchCard from '@/views/taint/searchCard.vue'
+
+// 递归参数组件
+@Component({
+  name: 'ParameterRecursive',
+  props: {
+    parameters: {
+      type: Array,
+      required: true
+    },
+    maxLevel: {
+      type: Number,
+      default: 4
+    },
+    currentLevel: {
+      type: Number,
+      default: 0
+    }
+  }
+})
+class ParameterRecursive extends Vue {
+  render(h: any) {
+    const { parameters, maxLevel, currentLevel } = this.$props;
+    
+    return h('div', {}, parameters.map((param: any) => {
+      return h('div', {}, [
+        h('div', {
+          class: {
+            'parameter-data-row': true,
+            'non-leaf': param.hasChildren,
+            'leaf': !param.hasChildren
+          },
+          on: {
+            click: param.hasChildren ? () => this.$emit('toggle', param) : () => {}
+          }
+        }, [
+          h('div', {
+            class: 'data-cell name-cell',
+            style: { paddingLeft: `${currentLevel * 20}px` }
+          }, param.name),
+          h('div', { class: 'data-cell type-cell' }, [
+            h('el-tooltip', {
+              props: {
+                effect: 'light',
+                content: param.type,
+                placement: 'top'
+              }
+            }, [
+              h('span', param.type_shortcut)
+            ])
+          ]),
+          h('div', { class: 'data-cell extra-cell' }, param.format),
+          h('div', { class: 'data-cell location-cell' }, param.in),
+          h('div', { class: 'data-cell expand-cell' }, [
+            param.hasChildren 
+              ? h('i', {
+                  class: param.expanded ? 'el-icon-arrow-down' : 'el-icon-arrow-right'
+                })
+              : h('i', {
+                  class: 'el-icon-document',
+                  style: { color: '#909399' }
+                })
+          ])
+        ]),
+        
+        // 递归渲染子组件
+        param.expanded && param.children && param.children.length > 0 && currentLevel < maxLevel
+          ? h(ParameterRecursive, {
+              props: {
+                parameters: param.children,
+                maxLevel,
+                currentLevel: currentLevel + 1
+              },
+              on: {
+                toggle: (childParam: any) => this.$emit('toggle', childParam)
+              }
+            })
+          : null
+      ]);
+    }));
+  }
+}
+
 @Component({
   name: 'ApiList',
   components: {
     SearchCard,
+    ParameterRecursive
   },
 })
 export default class Index extends VueBase {
@@ -409,7 +298,7 @@ export default class Index extends VueBase {
   private totalCount = ''
   private coverCount = ''
   private openCollapse = [0]
-  private apiList = []
+  private apiList: any[] = []
   
   private getColor(type: string) {
     switch (type) {
@@ -507,9 +396,9 @@ export default class Index extends VueBase {
         httpMethod: item.method.httpmethods[0],
         description: item.description,
         is_cover: item.is_cover,
-        return_type: item.responses[0] && item.responses[0].return_type,
-        return_type_shortcut:
-          item.responses[0] && item.responses[0].return_type_shortcut,
+        type: item.responses[0] && item.responses[0].type,
+        type_shortcut:
+          item.responses[0] && item.responses[0].type_shortcut,
         req_header_fs: `${item.method.httpmethods[0]} ${item.path} HTTP/1.1`,
         req_data: '',
         res_header: '',
