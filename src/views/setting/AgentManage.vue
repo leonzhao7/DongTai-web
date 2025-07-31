@@ -11,6 +11,7 @@
               size="small"
               @change="getTableData(true)"
             >
+              <el-option label="全部" :value="0"></el-option>
               <el-option label="过去2天" :value="2"></el-option>
               <el-option label="过去7天" :value="7"></el-option>
               <el-option label="过去14天" :value="14"></el-option>
@@ -572,7 +573,7 @@ export default class AgentManage extends VueBase {
   private activeProject: any = {}
   private drawer = false
 
-  private last_days = 2
+  private last_days = 0
 
   async openDrawer(row: AgentListObj) {
     const res = await this.services.setting.stat({
