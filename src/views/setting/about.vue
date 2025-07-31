@@ -16,18 +16,6 @@
       <div class="about-text">
         {{ $t('views.about.nowVersion') }}：{{ now_version }}
       </div>
-      <div v-if="new_version && new_version === now_version" class="about-text">
-        {{ $t('views.about.already') }}
-      </div>
-      <div v-if="new_version && new_version !== now_version" class="about-text">
-        {{ $t('views.about.newVersion') }}：{{ new_version }}
-        <span class="text-btn" @click="toUpdate">{{
-          $t('views.about.update')
-        }}</span>
-      </div>
-      <div v-if="!new_version" class="about-text">
-        {{ $t('views.about.checking') }}
-      </div>
       <div class="about-text">
         <div class="download-item margin-t-16">
           <div class="label">{{ $t('views.about.token') }}：</div>
@@ -50,15 +38,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="about-text">
-        <span class="text-btn" @click="toHelp">{{
-          $t('views.about.help')
-        }}</span>
-        <span class="text-btn" @click="toBug">{{
-          $t('views.about.issue')
-        }}</span>
-        <span class="text-btn" @click="toApi">{{ $t('views.about.api') }}</span>
       </div>
       <div class="btn-box">
         <el-button class="btn" @click="versionVisible = true">{{
@@ -111,15 +90,10 @@ export default class StatusMonitoring extends VueBase {
   private logo = '/upload/assets/img/logo.png?v=' + String(Math.random())
   private logo_en = '/upload/assets/img/logo_en.png?v=' + String(Math.random())
   private now_version = ''
-  private new_version = ''
   private versionVisible = false
   private versionMap: any = {}
   private versionString = ''
   private userToken = ''
-  private async getVersion() {
-    const res = await this.services.setting.version()
-    this.new_version = res.data.tag_name.substr(1)
-  }
   private async getNowVersion() {
     const res = await this.services.setting.nowVersion()
     const versionArr = res.data.split('\n')
@@ -159,19 +133,7 @@ export default class StatusMonitoring extends VueBase {
       type: 'success',
     })
   }
-  private toUpdate() {
-    window.open(`https://docs.dongtai.io/docs/changelog/release-note`)
-  }
-  private toHelp() {
-    window.open('https://doc.dongtai.io/')
-  }
 
-  private toBug() {
-    window.open('https://github.com/HXSecurity/DongTai/issues')
-  }
-  private toApi() {
-    window.open('https://i0x0fy4ibf.feishu.cn/docx/doxcnSoxZjm2nEMyT3KJwg6ej4e')
-  }
   private async getUserToken() {
     const res = await this.services.user.userToken()
     if (res.status === 201) {
@@ -181,7 +143,6 @@ export default class StatusMonitoring extends VueBase {
   created() {
     this.getNowVersion()
     this.getUserToken()
-    this.getVersion()
   }
 }
 </script>
