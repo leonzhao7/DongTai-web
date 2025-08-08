@@ -1,6 +1,8 @@
 import { RouteConfig } from 'vue-router'
 import { i18n } from '@/config/lang'
 
+import { userRoutes } from './user'
+
 const baseRoutes: Array<RouteConfig> = [
   {
     path: '/',
@@ -113,31 +115,6 @@ const routes: Array<RouteConfig> = [
           name: i18n.t('menu.projectDetail'),
         },
         component: () => import('@/views/project/ProjectDetail.vue'),
-      },
-    ],
-  },
-  {
-    path: '/api',
-    name: 'api',
-    redirect: '/api/apiList',
-    meta: {
-      disabled: true,
-      isMenu: true,
-      i18n: 'menu.api',
-      name: i18n.t('menu.api'),
-    },
-    component: () => import('@/views/api/Index.vue'),
-    children: [
-      {
-        path: 'apiList',
-        name: 'apiList',
-        meta: {
-          disabled: true,
-          isMenu: true,
-          i18n: 'menu.apiList',
-          name: i18n.t('menu.apiList'),
-        },
-        component: () => import('@/views/api/ApiList.vue'),
       },
     ],
   },
@@ -280,6 +257,17 @@ const routes: Array<RouteConfig> = [
     },
     component: () => import('@/views/setting/AgentManage.vue'),
   },
+  ...userRoutes,
+  // {
+  //   path: 'userCenter',
+  //   name: 'userCenter',
+  //   meta: {
+  //     isMenu: true,
+  //     i18n: 'menu.userCenter',
+  //     name: i18n.t('menu.userCenter'),
+  //   },
+  //   component: () => import('@/views/user/UserList.vue'),
+  // },
   {
     path: 'sysInfo',
     name: 'sysInfo',
@@ -523,31 +511,6 @@ const adminRoutes: Array<RouteConfig> = [
     ],
   },
   {
-    path: '/api',
-    name: 'api',
-    redirect: '/api/apiList',
-    meta: {
-      disabled: true,
-      isMenu: true,
-      i18n: 'menu.api',
-      name: i18n.t('menu.api'),
-    },
-    component: () => import('@/views/api/Index.vue'),
-    children: [
-      {
-        path: 'apiList',
-        name: 'apiList',
-        meta: {
-          disabled: true,
-          isMenu: true,
-          i18n: 'menu.apiList',
-          name: i18n.t('menu.apiList'),
-        },
-        component: () => import('@/views/api/ApiList.vue'),
-      },
-    ],
-  },
-  {
     path: '/vuln',
     name: 'vuln',
     redirect: '/vuln/vulnList',
@@ -686,6 +649,17 @@ const adminRoutes: Array<RouteConfig> = [
     },
     component: () => import('@/views/setting/AgentManage.vue'),
   },
+  ...userRoutes,
+  // {
+  //   path: 'userCenter',
+  //   name: 'userCenter',
+  //   meta: {
+  //     isMenu: true,
+  //     i18n: 'menu.userCenter',
+  //     name: i18n.t('menu.userCenter'),
+  //   },
+  //   component: () => import('@/views/user/UserList.vue'),
+  // },
   {
     path: 'sysInfo',
     name: 'sysInfo',
@@ -914,7 +888,7 @@ const adminRoutes: Array<RouteConfig> = [
   },
 ]
 
-const userRoutes: Array<RouteConfig> = [
+const defaultRoutes: Array<RouteConfig> = [
   {
     path: '/project',
     name: 'project',
@@ -1092,6 +1066,17 @@ const userRoutes: Array<RouteConfig> = [
     },
     component: () => import('@/views/setting/AgentManage.vue'),
   },
+  ...userRoutes,
+  // {
+  //   path: 'userCenter',
+  //   name: 'userCenter',
+  //   meta: {
+  //     isMenu: true,
+  //     i18n: 'menu.userCenter',
+  //     name: i18n.t('menu.userCenter'),
+  //   },
+  //   component: () => import('@/views/user/UserList.vue'),
+  // },
   {
     path: 'sysInfo',
     name: 'sysInfo',
@@ -1268,6 +1253,6 @@ const userRoutes: Array<RouteConfig> = [
 export default {
   baseRoutes,
   routes,
-  userRoutes,
+  defaultRoutes,
   adminRoutes,
 }

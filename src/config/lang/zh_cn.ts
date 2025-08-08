@@ -100,6 +100,7 @@ export default {
     vulnDetail: '应用漏洞详情',
     sca: '组件',
     api: 'API导航',
+    userCenter: '用户中心',
     scaList: '组件管理列表',
     scalistDetail: '组件详情',
     scaDetail: '组件管理详情',
@@ -133,6 +134,13 @@ export default {
     templateManage: '策略模板管理',
   },
   views: {
+    confirm: '确定',
+    cancel: '取消',
+    delete: '删除',
+    deleteSuccess: '删除成功',
+    reset: '重置',
+    resetSuccess: '重置成功',
+    operate: '管理',
     webhook: {
       deleteConfirm: '你确定要删除此webhook吗',
       deleteConfirmPop: '确认删除',
@@ -1064,6 +1072,40 @@ export default {
       loading: '进行中',
       rWarningInfo: '此操作将永久删除该报告, 是否继续?',
     },
+    userCenter: {
+      empty: {
+        noPrivilege: "暂无权限，请联系管理员添加",
+      },
+      tenant: {
+        name: '公司名称',
+        status:'状态',
+        departmentCount: '部门数量',
+        userCount: '用户数量',
+        noUsers: "无用户",
+        addTenant: '新增公司',
+        namePlaceholder: '请输入公司名称',
+        deleteConfirm: '确定要删除该公司？'
+      },
+      department: {
+        name: '部门名称',
+        parentName: '上级部门',
+        userCount: '用户数量',
+        noUsers: "无用户",
+        addDepartment: '新增部门',
+        namePlaceholder: '请输入部门名称',
+        deleteConfirm: '确定要删除该部门？'
+      },
+      manage: {
+        name: '用户名称',
+        email: '用户邮箱',
+        phone: '联系电话',
+        role: '角色',
+        addUser: '新增用户',
+        namePlaceholder: '请输入用户名称',
+        deleteConfirm: '确定要删除该用户？',
+        resetPasswdConfirm: '重设该用户的密码为初始密码？',
+      },
+    },
     userList: {
       keywordPlaceholder: '请输入名称关键字',
       addUser: '新增用户',
@@ -1104,6 +1146,10 @@ export default {
       edit: '修改',
       del: '删除',
       talent: '部门名称',
+    },
+    userDepartment: {
+      addDepartment: '新增部门',
+      name: '部门名称',
     },
     talent: {
       delete: {

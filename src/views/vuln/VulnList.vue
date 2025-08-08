@@ -156,29 +156,6 @@
             </div>
           </el-checkbox>
         </template>
-        <div
-          v-if="searchOptionsObj.language.length"
-          class="module-title flex-row-space-between"
-        >
-          <span class="filter-box-title"> 语言 </span>
-        </div>
-        <el-checkbox
-          v-for="(item, index) in searchOptionsObj.language"
-          :key="'language' + item.id + '-' + index"
-          v-model="searchObj.language_str"
-          :label="item.id"
-          class="flex-row-space-between module-line"
-          @change="newSelectData"
-        >
-          <div class="check-label">
-            <div class="selectOption">
-              {{ item.name }}
-            </div>
-            <div class="num">
-              {{ item.num }}
-            </div>
-          </div>
-        </el-checkbox>
       </div>
     </div>
     <div class="main-warp">

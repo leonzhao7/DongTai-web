@@ -54,7 +54,7 @@ const actions: any = {
         context.commit('SET_ROUTER', route.adminRoutes)
         break
       default:
-        context.commit('SET_ROUTER', route.userRoutes)
+        context.commit('SET_ROUTER', route.defaultRoutes)
         break
     }
     context.commit('UPDATE_USER_INFO', data)

@@ -1,6 +1,12 @@
 import { Vue } from 'vue-property-decorator'
 import services from '@/services'
 
+export enum RoleLevel {
+  SUPER_ADMIN = 1,
+  TENANT_ADMIN = 2,
+  NORMAL_USER = 3,
+}
+
 export default class VueBase extends Vue {
   public services = services
 
@@ -31,5 +37,18 @@ export default class VueBase extends Vue {
     } else {
       return !roles.some((item) => item === this.$store.getters.userInfo)
     }
+  }
+
+  handleReply(status: number, msg: string) {
+    if (status !== 201) {
+      this.$message({
+        type: 'error',
+        message: msg,
+        showClose: true,
+      })
+      return false
+    }
+
+    return true
   }
 }

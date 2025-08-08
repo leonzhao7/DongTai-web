@@ -104,6 +104,7 @@ export default {
     vulnDetail: 'Application vulnerability details',
     sca: 'Libraries',
     api: 'API',
+    userCenter: 'User Center',
     scaList: 'Component management list',
     scaDetail: 'Component management details',
     scanDetail: 'Scan vulnerability details',
@@ -135,6 +136,9 @@ export default {
     templateManage: 'Template',
   },
   views: {
+    confirm: 'Confirm',
+    cancel: 'Cancel',
+    operate: 'Operate',
     webhook: {
       deleteConfirm: 'Are you sure you want to delete the webhook?',
       deleteConfirmPop: 'Delete',
@@ -1067,6 +1071,14 @@ export default {
       rWarningInfo:
         'This operation will permanently delete this report, do you want to continue?',
     },
+    userCenter: {
+      tenant: {
+        name: 'Tenant Name',
+        addTenant: 'Add Tenant',
+        status:'Status',
+        namePlaceholder: 'Enter the tenant name',
+      },
+    },
     userList: {
       keywordPlaceholder: 'Enter the keyword of username to search',
       addUser: 'Add User',
@@ -1109,6 +1121,10 @@ export default {
       edit: 'Modify',
       del: 'Delete',
       talent: 'Talent',
+    },
+    userDepartment: {
+      addDepartment: 'Add Department',
+      name: 'Department Name',
     },
     talent: {
       delete: {

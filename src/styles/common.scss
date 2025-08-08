@@ -68,3 +68,127 @@ ol, p, pre, small, span, strong, u, ul, var {
 ::-webkit-scrollbar-corner {
   background-color: #ECF0F7;
 }
+
+
+.manage-container {
+  margin-top: 16px;
+  padding: 24px;
+  background-color: #fff;
+
+  .top-line {
+    color: #38435a;
+    font-size: 16px;
+    font-weight: 600;
+    img {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+    }
+  }
+
+  .level-type {
+    height: 24px;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 32px;
+    line-height: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    &.height {
+      background: rgba(229, 99, 99, 0.1);
+      color: #e56363;
+    }
+    &.middle {
+      background: rgba(244, 158, 11, 0.1);
+      color: #f49e0b;
+    }
+    &.low {
+      background: rgba(47, 144, 234, 0.1);
+      color: #2f90ea;
+    }
+    &.info {
+      background: rgba(172, 180, 196, 0.1);
+      color: #abb2c0;
+    }
+  }
+  .table-btn-box {
+    display: flex;
+    align-items: center;
+    color: #1a80f2;
+    .l {
+      height: 10px;
+      border-left: 1px solid #b6bbc5;
+    }
+    .iconshezhi-2 {
+      margin-right: 12px;
+    }
+    .iconshanchu-6 {
+      margin-left: 12px;
+    }
+  }
+}
+
+.select-warp {
+  margin: 16px 0;
+  width: 100%;
+  .add-button {
+    padding: 0 16px;
+    background: #1a80f2;
+    border-radius: 2px;
+    border: 0px solid #1a80f2;
+    color: #ffffff;
+    height: 32px;
+    display: flex;
+    font-size: 14px;
+    align-items: center;
+    justify-content: center;
+    .iconfont {
+      font-size: 14px;
+      margin-right: 4px;
+    }
+  }
+}
+
+.list-table {
+  &.el-table {
+    border-left: 1px solid #e5e6eb;
+    border-right: 1px solid #e5e6eb;
+    border-top: 1px solid #e5e6eb;
+    ::v-deepth {
+      background: #f2f3f5;
+      .cell {
+        color: #38435a;
+        .el-checkbox {
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+}
+
+.submitBtn {
+  width: 124px;
+  height: 38px;
+  background: #4a72ae;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.cancelBtn {
+  width: 124px;
+  height: 38px;
+  border-radius: 2px;
+  border: 1px solid #4a72ae;
+  font-size: 14px;
+  color: #4a72ae;
+}
+
+.pIcon {
+  margin-right: 10px;
+  cursor: pointer;
+  &:hover {
+    color: #1a80f2;
+  }
+}

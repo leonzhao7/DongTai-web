@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 import { iResponse } from '@/services/types'
+import { TenantAddParams, DepartmentAddParams, UserAddParams } from '@/views/user/types'
 
 interface loginParams {
   username: string
@@ -11,17 +12,6 @@ interface changePasswordParams {
   username: string
   old_password: string
   new_password: string
-}
-
-interface UserAddParams {
-  username: string
-  password: string
-  re_password: string
-  email: string
-  role: number
-  department: any
-  phone: string
-  uid?: number
 }
 
 export default () =>
@@ -51,32 +41,25 @@ export default () =>
       return request.post('/user/changePassword', params)
     }
 
-    // userList
+    // 用户函数
     userList(params: {
       page: number
       pageSize: number
       keywords?: string
     }): Promise<iResponse> {
-      return request.get('/users', { params })
+      return request.get('/user/list', { params })
     }
 
-    // userAdd
     userAdd(params: UserAddParams): Promise<iResponse> {
-      return request.put('/user/add', params)
+      return request.post('/user/add', params)
     }
 
-    // userEdit
     userEdit(params: UserAddParams): Promise<iResponse> {
-      return request.post('/user/' + params.uid, params)
+      return request.post('/user/update', params)
     }
 
-    userDelete(params: { uid: number }): Promise<iResponse> {
-      return request.delete('/user/' + params.uid + '/delete')
-    }
-
-    // departmentList
-    departmentList(): Promise<iResponse> {
-      return request.get('/departments')
+    userDelete(params: { id: number }): Promise<iResponse> {
+      return request.post('/user/delete', params)
     }
 
     // Get user token and system update URL
@@ -84,8 +67,75 @@ export default () =>
       return request.get('/user/token')
     }
 
-    // User list
-    reset(params: { userId: number }): Promise<iResponse> {
-      return request.post('/user/password/reset', params)
+    userLock(params: { id: number }): Promise<iResponse> {
+      return request.post('/user/lock', params)
+    }
+
+    userReset(params: { id: number }): Promise<iResponse> {
+      return request.post('/user/reset', params)
+    }
+
+    // 租户函数
+    tenantList(params: {
+      page: number
+      pageSize: number
+      keywords?: string
+    }): Promise<iResponse> {
+      return request.get('/tenant/list', {params})
+    }
+
+    tenantAll(): Promise<iResponse> {
+      return request.get('/tenant/list')
+    }
+
+    tenantAdd(params: TenantAddParams): Promise<iResponse> {
+      return request.post('/tenant/add', params)
+    }
+
+    tenantDelete(params: {id: number}): Promise<iResponse> {
+      return request.post('/tenant/delete', params)
+    }
+
+    tenantEdit(params: TenantAddParams): Promise<iResponse> {
+      return request.post('/tenant/update', params)
+    }
+
+    tenantStatusList(): Promise<iResponse> {
+      return request.get('/tenant/status/list')
+    }
+
+    // 部门函数
+    departmentList(params: {
+      page: number
+      pageSize: number
+      keywords?: string
+    }): Promise<iResponse> {
+      return request.get('/department/list', {params})
+    }
+
+    departmentAll(): Promise<iResponse> {
+      return request.get('/department/list')
+    }
+
+    departmentAdd(params: DepartmentAddParams): Promise<iResponse> {
+      return request.post('/department/add', params)
+    }
+
+    departmentDelete(params: {id: number}): Promise<iResponse> {
+      return request.post('/department/delete', params)
+    }
+
+    departmentEdit(params: DepartmentAddParams): Promise<iResponse> {
+      return request.post('/department/update', params)
+    }
+
+    // 角色函数
+    roleAll(): Promise<iResponse> {
+      return request.get('/role/list')
+    }
+
+    // menu函数
+    menuList(): Promise<iResponse> {
+      return request.get('/menu/list')
     }
   })()
