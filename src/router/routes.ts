@@ -149,16 +149,6 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/vuln/VulnDetail.vue'),
       },
       {
-        path: 'scaDetail/:page/:id',
-        name: 'scaDetail/:page/:id',
-        meta: {
-          disabled: true,
-          i18n: 'menu.scaDetail',
-          name: i18n.t('menu.scaDetail'),
-        },
-        component: () => import('@/views/sca/ScaDetail.vue'),
-      },
-      {
         path: 'scanDetail/:page/:id',
         name: 'scanDetail/:page/:id',
         meta: {
@@ -167,39 +157,6 @@ const routes: Array<RouteConfig> = [
           name: i18n.t('menu.scaDetail'),
         },
         component: () => import('@/views/sca/ScanDetail.vue'),
-      },
-    ],
-  },
-  {
-    path: '/sca',
-    name: 'sca',
-    redirect: '/sca/scaList',
-    meta: {
-      disabled: true,
-      isMenu: true,
-      i18n: 'menu.sca',
-      name: i18n.t('menu.sca'),
-    },
-    component: () => import('@/views/sca/Index.vue'),
-    children: [
-      {
-        path: 'scaList',
-        name: 'scaList',
-        meta: {
-          disabled: true,
-          i18n: 'menu.scaList',
-          name: i18n.t('menu.scaList'),
-        },
-        component: () => import('@/views/sca/ScaList.vue'),
-      },
-      {
-        path: 'scalistDetail/:page/:id',
-        name: 'scalistDetail/:page/:id',
-        meta: {
-          i18n: 'menu.scalistDetail',
-          name: i18n.t('menu.vulnDetail'),
-        },
-        component: () => import('@/views/sca/ScaDialog.vue'),
       },
     ],
   },
@@ -368,16 +325,6 @@ const routes: Array<RouteConfig> = [
         },
         component: () => import('@/views/setting/template.vue'),
       },
-      // {
-      //   path: 'scaManage',
-      //   name: 'scaManage',
-      //   meta: {
-      //     disabled: true,
-      //     i18n: 'menu.scaManage',
-      //     name: i18n.t('menu.scaManage'),
-      //   },
-      //   component: () => import('@/views/setting/scaManage.vue'),
-      // },
       {
         path: 'hookRule',
         name: 'hookRule',
@@ -541,16 +488,6 @@ const adminRoutes: Array<RouteConfig> = [
         component: () => import('@/views/vuln/VulnDetail.vue'),
       },
       {
-        path: 'scaDetail/:page/:id',
-        name: 'scaDetail/:page/:id',
-        meta: {
-          disabled: true,
-          i18n: 'menu.scaDetail',
-          name: i18n.t('menu.scaDetail'),
-        },
-        component: () => import('@/views/sca/ScaDetail.vue'),
-      },
-      {
         path: 'scanDetail/:page/:id',
         name: 'scanDetail/:page/:id',
         meta: {
@@ -559,39 +496,6 @@ const adminRoutes: Array<RouteConfig> = [
           name: i18n.t('menu.scaDetail'),
         },
         component: () => import('@/views/sca/ScanDetail.vue'),
-      },
-    ],
-  },
-  {
-    path: '/sca',
-    name: 'sca',
-    redirect: '/sca/scaList',
-    meta: {
-      disabled: true,
-      isMenu: true,
-      i18n: 'menu.sca',
-      name: i18n.t('menu.sca'),
-    },
-    component: () => import('@/views/sca/Index.vue'),
-    children: [
-      {
-        path: 'scaList',
-        name: 'scaList',
-        meta: {
-          disabled: true,
-          i18n: 'menu.scaList',
-          name: i18n.t('menu.scaList'),
-        },
-        component: () => import('@/views/sca/ScaList.vue'),
-      },
-      {
-        path: 'scalistDetail/:page/:id',
-        name: 'scalistDetail/:page/:id',
-        meta: {
-          i18n: 'menu.scalistDetail',
-          name: i18n.t('menu.vulnDetail'),
-        },
-        component: () => import('@/views/sca/ScaDialog.vue'),
       },
     ],
   },
@@ -783,16 +687,6 @@ const adminRoutes: Array<RouteConfig> = [
         },
         component: () => import('@/views/setting/template.vue'),
       },
-      // {
-      //   path: 'scaManage',
-      //   name: 'scaManage',
-      //   meta: {
-      //     disabled: true,
-      //     i18n: 'menu.scaManage',
-      //     name: i18n.t('menu.scaManage'),
-      //   },
-      //   component: () => import('@/views/setting/scaManage.vue'),
-      // },
       {
         path: 'hookRule',
         name: 'hookRule',
@@ -965,16 +859,6 @@ const defaultRoutes: Array<RouteConfig> = [
         component: () => import('@/views/vuln/VulnDetail.vue'),
       },
       {
-        path: 'scaDetail/:page/:id',
-        name: 'scaDetail/:page/:id',
-        meta: {
-          disabled: true,
-          i18n: 'menu.scaDetail',
-          name: i18n.t('menu.scaDetail'),
-        },
-        component: () => import('@/views/sca/ScaDetail.vue'),
-      },
-      {
         path: 'scanDetail/:page/:id',
         name: 'scanDetail/:page/:id',
         meta: {
@@ -983,39 +867,6 @@ const defaultRoutes: Array<RouteConfig> = [
           name: i18n.t('menu.scaDetail'),
         },
         component: () => import('@/views/sca/ScanDetail.vue'),
-      },
-    ],
-  },
-  {
-    path: '/sca',
-    name: 'sca',
-    redirect: '/sca/scaList',
-    meta: {
-      disabled: true,
-      isMenu: true,
-      i18n: 'menu.sca',
-      name: i18n.t('menu.sca'),
-    },
-    component: () => import('@/views/sca/Index.vue'),
-    children: [
-      {
-        path: 'scaList',
-        name: 'scaList',
-        meta: {
-          disabled: true,
-          i18n: 'menu.scaList',
-          name: i18n.t('menu.scaList'),
-        },
-        component: () => import('@/views/sca/ScaList.vue'),
-      },
-      {
-        path: 'scalistDetail/:page/:id',
-        name: 'scalistDetail/:page/:id',
-        meta: {
-          i18n: 'menu.scalistDetail',
-          name: i18n.t('menu.scalistDetail'),
-        },
-        component: () => import('@/views/sca/ScaDialog.vue'),
       },
     ],
   },
@@ -1156,16 +1007,6 @@ const defaultRoutes: Array<RouteConfig> = [
         },
         component: () => import('@/views/setting/template.vue'),
       },
-      // {
-      //   path: 'scaManage',
-      //   name: 'scaManage',
-      //   meta: {
-      //     disabled: true,
-      //     i18n: 'menu.scaManage',
-      //     name: i18n.t('menu.scaManage'),
-      //   },
-      //   component: () => import('@/views/setting/scaManage.vue'),
-      // },
       {
         path: 'hookRule',
         name: 'hookRule',
