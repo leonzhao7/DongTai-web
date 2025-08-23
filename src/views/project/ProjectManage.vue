@@ -33,19 +33,19 @@
     <div class="list-warp">
       <el-table :data="tableData" class="projectList-table">
         <el-table-column prop="name" :label="$t('views.projectManage.name')">
-          <template slot-scope="{ row }">
+          <template #default="scope">
             <el-tooltip
               class="item"
               effect="dark"
-              :content="row.name"
+              :content="scope.row.name"
               placement="top"
-              :disabled="row.name.length < 44"
+              :disabled="scope.row.name.length < 44"
             >
               <div
                 class="projectName"
-                @click="$router.push(`/project/projectDetail/${row.id}`)"
+                @click="$router.push(`/project/projectDetail/${scope.row.id}`)"
               >
-                {{ row.name }}
+                {{ scope.row.name }}
               </div>
             </el-tooltip>
           </template>
@@ -55,9 +55,9 @@
           style="padding-left: 20px"
           :label="$t('views.projectManage.vul')"
         >
-          <template slot-scope="{ row }">
+          <template #default="scope">
             <span
-              v-for="item in row.vul_count"
+              v-for="item in scope.row.vul_count"
               :key="item.level"
               style="margin-right: 10px"
               class="level-type"
@@ -77,16 +77,16 @@
           :label="$t('views.projectManage.manage')"
           width="120px"
         >
-          <template slot-scope="{ row }">
+          <template #default="scope">
             <div class="table-btn-box">
               <i
                 class="iconfont iconshezhi-2 pIcon"
-                @click="$router.push(`/project/projectEdit/${row.id}`)"
+                @click="$router.push(`/project/projectEdit/${scope.row.id}`)"
               ></i>
               <span class="l"></span>
               <i
                 class="iconfont iconshanchu-6 pIcon"
-                @click="projectDelete(row.id)"
+                @click="projectDelete(scope.row.id)"
               ></i>
             </div>
           </template>

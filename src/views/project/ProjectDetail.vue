@@ -89,15 +89,6 @@
           {{ $t('views.projectDetail.projectVul') }}
         </el-button>
         <el-button
-          type="text"
-          class="pTab"
-          :class="selectTab === 'component' ? 'selected' : ''"
-          @click="changeActive('component')"
-        >
-          <i class="el-icon-menu" style="line-height: 8px"></i>
-          {{ $t('views.projectDetail.projectComponent') }}
-        </el-button>
-        <el-button
           v-if="showApiListFlag"
           type="text"
           class="pTab"

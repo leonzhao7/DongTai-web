@@ -71,6 +71,10 @@ export default () =>
       return request.post('/user/lock', params)
     }
 
+    userUnlock(params: { id: number }): Promise<iResponse> {
+      return request.post('/user/unlock', params)
+    }
+
     userReset(params: { id: number }): Promise<iResponse> {
       return request.post('/user/reset', params)
     }

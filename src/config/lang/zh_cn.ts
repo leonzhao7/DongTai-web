@@ -141,6 +141,7 @@ export default {
     reset: '重置',
     resetSuccess: '重置成功',
     operate: '管理',
+    modify: "修改",
     webhook: {
       deleteConfirm: '你确定要删除此webhook吗',
       deleteConfirmPop: '确认删除',
@@ -1072,6 +1073,11 @@ export default {
       loading: '进行中',
       rWarningInfo: '此操作将永久删除该报告, 是否继续?',
     },
+    project:{
+      Detail: {
+        department: "部门",
+      },
+    },
     userCenter: {
       empty: {
         noPrivilege: "暂无权限，请联系管理员添加",
@@ -1101,6 +1107,8 @@ export default {
         phone: '联系电话',
         role: '角色',
         addUser: '新增用户',
+        lockUser: "锁定",
+        unlockUser: "解锁",
         namePlaceholder: '请输入用户名称',
         deleteConfirm: '确定要删除该用户？',
         resetPasswdConfirm: '重设该用户的密码为初始密码？',

@@ -37,9 +37,13 @@
         </el-table-column>
         <el-table-column :label="$t('views.operate')" width="100px">
           <template #default="{ row }">
-            <i class="iconfont iconshezhi-2 pIcon" @click="tenantEdit(row)"></i>
+            <div class="btn-list">
+              <el-button type="text" @click="tenantEdit(row)">{{ $t('views.modify') }}</el-button>
+              <el-button type="text" @click="tenantDelete(row.id)">{{ $t('views.delete') }}</el-button>
+            </div>
+            <!-- <i class="iconfont iconshezhi-2 pIcon" @click="tenantEdit(row)"></i>
             <span class="l"></span>
-            <i class="iconfont iconshanchu-6 pIcon" @click="tenantDelete(row.id)"></i>
+            <i class="iconfont iconshanchu-6 pIcon" @click="tenantDelete(row.id)"></i> -->
           </template>
         </el-table-column>
       </el-table>

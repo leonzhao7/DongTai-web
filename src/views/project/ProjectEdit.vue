@@ -545,6 +545,7 @@ export default class ProjectEdit extends VueBase {
     mode: string
     agentIdList: Array<number>
     scanId: number | undefined
+    vid: number | undefined
     version_name: string
     description: string
     vul_validation: number
@@ -559,6 +560,7 @@ export default class ProjectEdit extends VueBase {
     mode: this.$t('views.projectEdit.mode1') as string,
     agentIdList: [],
     scanId: undefined,
+    vid: 0,
     version_name: '',
     description: '',
     vul_validation: 0,
@@ -702,6 +704,7 @@ export default class ProjectEdit extends VueBase {
       return item.id
     })
     this.submitForm.scanId = data.scan_id
+    this.submitForm.vid = data.versionData?.version_id
     this.submitForm.version_name = data.versionData?.version_name
     this.submitForm.description = data.versionData?.description
     this.submitForm.vul_validation = data.vul_validation
@@ -895,22 +898,23 @@ export default class ProjectEdit extends VueBase {
           name: string
           mode: string | any
           agent_ids: string
-	  scan_id: number
+          scan_id: number
           pid?: string
+          vid?: number
           version_name: string | undefined
           description: string | undefined
           vul_validation: number
           base_url: string
           test_req_header_key: string
           test_req_header_value: string
-	  template_id: any
+          template_id: any
           enable_log: any
           log_level: any
         } = {
           name: this.submitForm.name,
           mode: this.submitForm.mode,
           agent_ids: this.submitForm.agentIdList.join(','),
-	  scan_id: this.submitForm.scanId as number,
+          scan_id: this.submitForm.scanId as number,
           version_name: this.submitForm.version_name
             ? this.submitForm.version_name
             : undefined,
@@ -921,12 +925,15 @@ export default class ProjectEdit extends VueBase {
           base_url: this.submitForm.base_url,
           test_req_header_key: this.submitForm.test_req_header_key,
           test_req_header_value: this.submitForm.test_req_header_value,
-	  template_id: this.submitForm.template_id,
+          template_id: this.submitForm.template_id,
           enable_log: this.submitForm.enable_log,
           log_level: this.submitForm.log_level,
         }
         if (this.$route.params.pid) {
           params.pid = this.$route.params.pid
+        }
+        if (this.submitForm.vid) {
+          params.vid = this.submitForm.vid
         }
         const { status, msg } = await this.services.project.projectAdd(params)
         if (status !== 201) {

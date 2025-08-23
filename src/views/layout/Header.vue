@@ -1,14 +1,5 @@
 <template>
   <div>
-    <div v-if="sca_setup" style="background: #fff">
-      <div class="header-top-bar">
-        未配置ScaToken:<a
-          target="_blank"
-          href="https://doc.dongtai.io/docs/getting-started/server/deploy-sca"
-          >点我配置</a
-        >
-      </div>
-    </div>
     <header class="header">
       <div class="container flex-row-space-between header-warp">
         <div class="logo flex-column-center" @click="$router.push('/')">
@@ -323,10 +314,6 @@ export default class Header extends VueBase {
     await this.$store.dispatch('user/logOut')
   }
   private timer: any = null
-
-  get sca_setup(): any {
-    return this.$store.state.user.userInfo?.sca_setup
-  }
 
   created() {
     this.messageUnreadCount()

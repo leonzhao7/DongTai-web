@@ -193,7 +193,7 @@
             <template slot-scope="{ row }">
               <el-tooltip class="item" effect="dark" placement="top">
                 <div class="dot">
-                  {{ row.events && row.events[row.events.length - 1] }}
+                  {{ row.new_events && row.new_events[row.new_events.length - 1]["name"] }}
                 </div>
 
                 <div slot="content">
@@ -203,7 +203,7 @@
                     class="event-item"
                   >
                     {{ item.name }}{{ item.time && ':' }}
-                    {{ item.time | formatTimestamp }}
+                    {{ item.time }}
                   </div>
                 </div>
               </el-tooltip>
@@ -213,19 +213,19 @@
           <el-table-column
             width="150"
             label="关联项目"
-            prop="bind_project__name"
+            prop="project__name"
           >
             <template slot-scope="{ row }">
               <div
                 class="dot project-name"
                 style="width: 140px"
-                @click="toDetail(row.bind_project__id)"
+                @click="toDetail(row.project__id)"
               >
-                {{ row.bind_project__name }}
+                {{ row.project__name + ": " + row.project_version__version_name}}
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="语言" prop="is_core_running" width="100px">
+          <el-table-column label="语言" width="100px">
             <template slot-scope="{ row }">
               <div>
                 <Language :language="row.language"></Language>
@@ -285,7 +285,6 @@
 
           <el-table-column
             label="运行状态"
-            prop="is_core_running"
             width="100px"
           >
             <template slot-scope="{ row }">
@@ -329,115 +328,6 @@
               </el-tooltip> -->
             </template>
           </el-table-column>
-
-          <!-- <el-table-column
-            :label="$t('views.agentManage.manage')"
-            width="280px"
-            fixed="right"
-          >
-            <template slot-scope="{ row }">
-              <div class="table-btn-box">
-                <template v-if="row.is_control === 1">
-                  <el-button
-                    style="color: #4a72ae; position: absolute; left: 0"
-                    size="small"
-                    type="text"
-                    :class="!state && 'icon-disabled'"
-                  >
-                    <span class="el-text el-icon-loading"> </span>
-                  </el-button>
-                </template>
-                <template>
-                  <el-button
-                    v-if="row.is_core_running == 0"
-                    type="text"
-                    size="small"
-                    :disabled="row.is_control === 1"
-                    style="color: #4a72ae"
-                    @click="update(row.id, 3)"
-                    ><span class="el-text">{{
-                      $t('views.agentManage.startUp')
-                    }}</span></el-button
-                  >
-                  <el-button
-                    v-else
-                    type="text"
-                    size="small"
-                    :disabled="row.is_control === 1"
-                    style="color: #4a72ae"
-                    @click="update(row.id, 4)"
-                    ><span class="el-text">{{
-                      $t('views.agentManage.suspend')
-                    }}</span></el-button
-                  >
-                </template>
-
-                <span class="l"> | </span>
-
-                <el-button
-                  v-if="row.is_core_running === 2"
-                  type="text"
-                  size="small"
-                  style="color: #4a72ae"
-                  :disabled="row.is_control === 1"
-                  @click="update(row.id, 2)"
-                >
-                  <span class="el-text">{{
-                    $t('views.agentManage.register')
-                  }}</span></el-button
-                >
-
-                <el-button
-                  v-if="row.is_core_running !== 2"
-                  type="text"
-                  size="small"
-                  :disabled="row.is_control === 1"
-                  style="color: #4a72ae"
-                  @click="update(row.id, 5)"
-                  ><span class="el-text">{{
-                    $t('views.agentManage.uninstall')
-                  }}</span></el-button
-                >
-                <span v-if="row.is_core_running !== 0" class="l"> | </span>
-
-                <el-button
-                  v-if="row.is_core_running !== 0"
-                  type="text"
-                  size="small"
-                  :disabled="row.is_control === 1"
-                  style="color: #4a72ae"
-                  @click="update(row.id, 6)"
-                  ><span class="el-text">{{
-                    $t('views.agentManage.Demotion')
-                  }}</span></el-button
-                >
-                <span v-if="row.is_core_running === 0" class="l"> | </span>
-
-                <el-button
-                  v-if="row.is_core_running === 0"
-                  type="text"
-                  size="small"
-                  :disabled="row.is_control === 1"
-                  style="color: #4a72ae"
-                  @click="update(row.id, 7)"
-                  ><span class="el-text">{{
-                    $t('views.agentManage.recovery')
-                  }}</span></el-button
-                >
-                <span class="l"> | </span>
-                <el-button
-                  type="text"
-                  size="small"
-                  style="color: #f56262"
-                  @click="doDelete(row.id)"
-                >
-                  <span class="el-text">{{
-                    $t('views.agentManage.delete')
-                  }}</span>
-                </el-button>
-              </div>
-            </template>
-          </el-table-column> -->
         </el-table>
         <div class="bottom-box">
           <div style="color: rgb(56, 67, 90)">
@@ -473,7 +363,7 @@
       <div class="agent-drawer-body">
         <div class="agent-drawer-body-item">
           <div class="label">关联项目</div>
-          <div class="value">{{ activeProject.bind_project__name }}</div>
+          <div class="value">{{ activeProject.project__name }}</div>
         </div>
         <div class="agent-drawer-body-item">
           <div class="label">语言</div>
@@ -506,7 +396,7 @@
         <div class="agent-drawer-body-item">
           <div class="label">安装时间</div>
           <div class="value">
-            {{ activeProject.register_time | formatTimestamp }}
+            {{ activeProject.register_time }}
           </div>
         </div>
         <div class="agent-drawer-body-item">
@@ -522,7 +412,7 @@
         <div class="agent-drawer-body-item">
           <div class="label">负责人</div>
           <div class="value">
-            {{ activeProject.bind_project__user__username }}
+            {{ activeProject.project__user__username }}
           </div>
         </div>
         <div class="agent-drawer-body-item">
@@ -824,23 +714,6 @@ export default class AgentManage extends VueBase {
     this.summary = res.data
   }
 
-  private async agentInstall(id: string | number) {
-    this.loadingStart()
-    const { status, msg } = await this.services.setting.agentInstall({
-      id: parseInt(`${id}`),
-    })
-    this.loadingDone()
-    if (status !== 201) {
-      this.$message({
-        type: 'error',
-        message: msg,
-        showClose: true,
-      })
-      return
-    }
-    await this.getTableData()
-  }
-
   private async deleteAgents() {
     if (this.multipleSelection.length === 0) {
       this.$message.warning(
@@ -1061,71 +934,6 @@ export default class AgentManage extends VueBase {
       showClose: true,
     })
     await this.getTableData()
-  }
-
-  private async agentUninstall(id: string | number) {
-    this.loadingStart()
-    const { status, msg } = await this.services.setting.agentUninstall({
-      id: parseInt(`${id}`),
-    })
-    this.loadingDone()
-    if (status !== 201) {
-      this.$message({
-        type: 'error',
-        message: msg,
-        showClose: true,
-      })
-      return
-    }
-    await this.getTableData()
-  }
-
-  private async doDelete(id: string | number) {
-    this.$confirm(
-      this.$t('views.strategyManage.deleteWarning') as string,
-      this.$t('views.strategyManage.deletePop') as string,
-      {
-        confirmButtonText: this.$t('views.strategyManage.enter') as string,
-        cancelButtonText: this.$t('views.strategyManage.clear') as string,
-        type: 'warning',
-      }
-    ).then(async () => {
-      const { status, msg } = await this.services.setting.agentDelete({
-        id: Number(id),
-      })
-      if (status !== 201) {
-        this.$message({
-          type: 'error',
-          message: msg,
-          showClose: true,
-        })
-        return
-      }
-      this.$message({ type: 'success', message: msg, showClose: true })
-
-      this.currentPageDelete = this.currentPageDelete + 1
-      if (this.currentPageDelete === this.currentPageSize) {
-        this.page = this.page - 1
-      }
-      await this.getTableData()
-      this.deleteSelectId = 0
-    })
-  }
-
-  private async agentDelete() {
-    this.loadingStart()
-    const { status, msg } = await this.services.setting.agentDelete({
-      id: this.deleteSelectId,
-    })
-    this.loadingDone()
-    if (status !== 201) {
-      this.$message({
-        type: 'error',
-        message: msg,
-        showClose: true,
-      })
-      return
-    }
   }
 
   async changeCoreControl(id: any, e: any) {

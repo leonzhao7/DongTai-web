@@ -8,8 +8,8 @@ export interface UserListObj {
   tenant: string
   tenant_id: number
   deleted: number
-  department: string
-  department_id: number
+  department: string[]
+  department_id: number[]
 }
 
 export interface UserAddParams {
@@ -17,7 +17,7 @@ export interface UserAddParams {
   email?: string
   role?: number
   tenant?: number
-  department?: number
+  department?: number[]
   phone?: string
   id?: number
 }

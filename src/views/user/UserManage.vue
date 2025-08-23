@@ -30,14 +30,26 @@
         <el-table-column :label="$t('views.userCenter.manage.phone')" prop="phone"></el-table-column>
         <el-table-column :label="$t('views.userCenter.manage.role')" prop="role"></el-table-column>
         <el-table-column :label="$t('views.userCenter.tenant.name')" prop="tenant"></el-table-column>
-        <el-table-column :label="$t('views.userCenter.department.name')" prop="department"></el-table-column>
-        <el-table-column :label="$t('views.operate')" width="100px">
+        <el-table-column :label="$t('views.userCenter.department.name')">
+          <template #default="scope">
+            <span>{{ joinDepartments(scope.row.department) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('views.operate')" width="160px">
           <template #default="{ row }">
-            <i class="iconfont iconshezhi-2 pIcon" @click="userEdit(row)"></i>
+            <div>
+              <el-button type="text" @click="userEdit(row)">{{ $t('views.modify') }}</el-button>
+              <el-button type="text" @click="row.is_active ? userLock(row.id) : userUnlock(row.id)"
+              >
+                {{ row.is_active ? $t('views.userCenter.manage.lockUser') : $t('views.userCenter.manage.unlockUser') }}
+              </el-button>
+              <el-button type="text" @click="userReset(row.id)">{{ $t('views.reset') }}</el-button>
+            </div>
+            <!-- <i class="iconfont iconshezhi-2 pIcon" @click="userEdit(row)"></i>
             <span class="l"></span>
             <i class="iconfont iconshanchu-6 pIcon" @click="userDelete(row.id)"></i>
             <span class="l"></span>
-            <i class="iconfont iconzhongzhimima pIcon" @click="userReset(row.id)"></i>
+            <i class="iconfont iconzhongzhimima pIcon" @click="userReset(row.id)"></i> -->
           </template>
         </el-table-column>
       </el-table>
@@ -112,23 +124,15 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('views.userCenter.department.name')">
-          <el-select
-            v-model="userForm.department"
-            class="addUserInput"
-            filterable
-            allow-create
-            :placeholder="$t('views.userCenter.department.namePlaceholder')"
-            clearable
-            style="width: 400px"
-          >
-            <el-option
-              v-for="item in departments"
-              :key="item.id"
-              :value="item.id"
-              :label="item.name"
-            ></el-option>
-          </el-select>
+        <el-form-item :label="$t('views.userCenter.department.name')" prop="department">
+          <template v-for="item in departments">
+            <el-checkbox 
+              :label="item.id" 
+              :key="item.id" 
+              v-model="userForm.department">
+                {{ item.name }}
+              </el-checkbox>
+          </template>
         </el-form-item>
         <el-form-item :label="$t('views.userCenter.manage.role')">
           <el-select
@@ -195,6 +199,7 @@ export default class UserDepartment extends VueBase {
   private addDialogShow() {
     this.userForm = {
       name: '',
+      department: [],
     }
     this.addDialogOpen = true
   }
@@ -206,6 +211,7 @@ export default class UserDepartment extends VueBase {
       email: row.email,
       phone: row.phone,
       role: row.role_id,
+      department: [],
     }
     if (row.department_id) {
       this.userForm.department = row.department_id
@@ -283,6 +289,7 @@ export default class UserDepartment extends VueBase {
   private userAdd() {
     ;(this.$refs.ruleForm as Form).validate(async (valid: any) => {
       if (valid) {
+        console.log(this.userForm.department)
         const params: UserAddParams = {
           name: this.userForm.name,
           email: this.userForm.email,
@@ -301,10 +308,10 @@ export default class UserDepartment extends VueBase {
         this.loadingStart()
         if (this.userForm.id) {
           params.id = this.userForm.id
-          const { status, msg } = await this.services.user.userEdit(params)
+          const { status, msg } = await this.services.user.userEdit(this.userForm)
           error = this.handleReply(status, msg)
         } else {
-          const { status, msg } = await this.services.user.userAdd(params)
+          const { status, msg } = await this.services.user.userAdd(this.userForm)
           error = this.handleReply(status, msg)
         }
         this.loadingDone()
@@ -356,6 +363,21 @@ export default class UserDepartment extends VueBase {
     await this.getTableData()
   }
 
+    private async userUnlock(id: number) {
+    this.loadingStart()
+    const { status, msg } = await this.services.user.userUnlock({id})
+    this.loadingDone()
+    if (status !== 201) {
+      this.$message({
+        type: 'error',
+        message: msg,
+        showClose: true,
+      })
+      return
+    }
+    await this.getTableData()
+  }
+
   private async userReset(id: number) {
     this.$confirm(this.$t('views.userCenter.manage.resetPasswdConfirm') as string, '', {
       confirmButtonText: this.$t('views.reset') as string,
@@ -375,6 +397,14 @@ export default class UserDepartment extends VueBase {
       })
       await this.getTableData()
     })
+  }
+
+  private joinDepartments(departs: string[]): string {
+    if (!departs || departs.length == 0) {
+      return ""
+    }
+
+    return departs.join(', ');
   }
 }
 </script>
