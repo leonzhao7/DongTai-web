@@ -171,14 +171,14 @@
         >
           <el-table-column
             type="selection"
-            width="55"
+            width="44px"
             :selectable="agentSelectable"
           >
           </el-table-column>
-          <el-table-column label="序号" prop="id" width="105">
+          <el-table-column label="序号" prop="id" width="50px">
           </el-table-column>
           <el-table-column
-            label="UUID"
+            label="主机名"
             prop="server__hostname"
             min-width="120px"
           >
@@ -189,25 +189,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="事件记录" prop="events" min-width="120px">
-            <template slot-scope="{ row }">
-              <el-tooltip class="item" effect="dark" placement="top">
-                <div class="dot">
-                  {{ row.new_events && row.new_events[row.new_events.length - 1]["name"] }}
-                </div>
-
-                <div slot="content">
-                  <div
-                    v-for="item in row.new_events"
-                    :key="item"
-                    class="event-item"
-                  >
-                    {{ item.name }}{{ item.time && ':' }}
-                    {{ item.time }}
-                  </div>
-                </div>
-              </el-tooltip>
-            </template>
+          <el-table-column label="启动时间" prop="startup_time" min-width="186px">
           </el-table-column>
 
           <el-table-column
@@ -273,7 +255,7 @@
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column label="资源" prop="server" width="230px">
+          <el-table-column label="资源" prop="server" width="220px">
             <template slot-scope="{ row }">
               <Resource
                 :cpu_rate="row.cpu_rate"
@@ -420,10 +402,6 @@
           <div class="value">{{ activeProject.vul_count }}</div>
         </div>
         <div class="agent-drawer-body-item">
-          <div class="label">组件数量</div>
-          <div class="value">{{ activeProject.sca_count }}</div>
-        </div>
-        <div class="agent-drawer-body-item">
           <div class="label">接口数量</div>
           <div class="value">{{ activeProject.api_count }}</div>
         </div>
@@ -471,7 +449,6 @@ export default class AgentManage extends VueBase {
     })
     this.activeProject = row
     this.activeProject.api_count = res.data.api_count
-    this.activeProject.sca_count = res.data.sca_count
     this.activeProject.vul_count = res.data.vul_count
     this.drawer = true
   }

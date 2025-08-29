@@ -215,27 +215,6 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/views/setting/AgentManage.vue'),
   },
   ...userRoutes,
-  // {
-  //   path: 'userCenter',
-  //   name: 'userCenter',
-  //   meta: {
-  //     isMenu: true,
-  //     i18n: 'menu.userCenter',
-  //     name: i18n.t('menu.userCenter'),
-  //   },
-  //   component: () => import('@/views/user/UserList.vue'),
-  // },
-  {
-    path: 'sysInfo',
-    name: 'sysInfo',
-    meta: {
-      isMenu: true,
-      keepAlive: true,
-      i18n: 'menu.sysInfo',
-      name: i18n.t('menu.sysInfo'),
-    },
-    component: () => import('@/views/setting/SysInfo.vue'),
-  },
   {
     path: 'agentConfig',
     name: 'agentConfig',
@@ -554,26 +533,6 @@ const adminRoutes: Array<RouteConfig> = [
     component: () => import('@/views/setting/AgentManage.vue'),
   },
   ...userRoutes,
-  // {
-  //   path: 'userCenter',
-  //   name: 'userCenter',
-  //   meta: {
-  //     isMenu: true,
-  //     i18n: 'menu.userCenter',
-  //     name: i18n.t('menu.userCenter'),
-  //   },
-  //   component: () => import('@/views/user/UserList.vue'),
-  // },
-  {
-    path: 'sysInfo',
-    name: 'sysInfo',
-    meta: {
-      keepAlive: true,
-      i18n: 'menu.sysInfo',
-      name: i18n.t('menu.sysInfo'),
-    },
-    component: () => import('@/views/setting/SysInfo.vue'),
-  },
   {
     path: 'agentConfig',
     name: 'agentConfig',
@@ -918,26 +877,6 @@ const defaultRoutes: Array<RouteConfig> = [
     component: () => import('@/views/setting/AgentManage.vue'),
   },
   ...userRoutes,
-  // {
-  //   path: 'userCenter',
-  //   name: 'userCenter',
-  //   meta: {
-  //     isMenu: true,
-  //     i18n: 'menu.userCenter',
-  //     name: i18n.t('menu.userCenter'),
-  //   },
-  //   component: () => import('@/views/user/UserList.vue'),
-  // },
-  {
-    path: 'sysInfo',
-    name: 'sysInfo',
-    meta: {
-      keepAlive: true,
-      i18n: 'menu.sysInfo',
-      name: i18n.t('menu.sysInfo'),
-    },
-    component: () => import('@/views/setting/SysInfo.vue'),
-  },
   {
     path: '/setting',
     name: 'setting',
