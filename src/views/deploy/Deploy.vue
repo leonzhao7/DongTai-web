@@ -647,11 +647,9 @@ export default class Deploy extends VueBase {
         }&language=java&token=${
           this.agentForm.department || this.token
         }&projectName=${
-          (this.agentForm.entryName && encodeURI(this.agentForm.entryName)) ||
-          'Demo%20Project'
+          (this.agentForm.entryName && encodeURI(this.agentForm.entryName)) || ''
         }&projectVersion=${
-          (this.agentForm.version && encodeURI(this.agentForm.version)) ||
-          'V1.0'
+          (this.agentForm.version && encodeURI(this.agentForm.version)) || ''
         }&template_id=${
           this.agentForm.projectTemplate || this.defaultTemplate
         }" -H "Authorization: Token ${
@@ -772,10 +770,9 @@ export default class Deploy extends VueBase {
       '/openapi&language=' +
       this.language +
       `&token=${this.agentForm.department || this.token}&projectName=${
-        (this.agentForm.entryName && encodeURI(this.agentForm.entryName)) ||
-        'Demo%20Project'
+        (this.agentForm.entryName && encodeURI(this.agentForm.entryName)) || ''
       }&projectVersion=${
-        (this.agentForm.version && encodeURI(this.agentForm.version)) || 'V1.0'
+        (this.agentForm.version && encodeURI(this.agentForm.version)) || ''
       }&template_id=${this.agentForm.projectTemplate || this.defaultTemplate}`
     console.log('url', url)
     window.open(url)

@@ -527,16 +527,6 @@ export default class VulnDetail extends VueBase {
     }
   }
 
-  private newSelectData() {
-    this.page = 1
-    this.getTableData()
-  }
-
-  private currentChange(val: number) {
-    this.page = val
-    this.getTableData()
-  }
-
   private async changeStatus(val: any) {
     if (!val) {
       return
@@ -576,48 +566,7 @@ export default class VulnDetail extends VueBase {
   }
   private req_md = ''
   private res_md = ''
-  private async getTableData() {
-    const params = {
-      page: this.page,
-      pageSize: 10,
-      language: this.searchObj.language,
-      level: this.searchObj.level,
-      type: this.searchObj.type,
-      project_name: this.searchObj.project_name,
-      url: this.searchObj.url,
-      order: this.searchObj.order,
-      status_id: this.$route.query.status,
-    }
-    this.loadingStart()
-    const { status, data, page, msg } = await this.services.vuln.vulnList(
-      params
-    )
-    this.loadingDone()
-    if (status !== 201) {
-      this.$message({
-        type: 'error',
-        message: msg,
-        showClose: true,
-      })
-      return
-    }
-    this.tableData = data.reduce(
-      (list: Array<VulnListObj>, item: VulnListObj) => {
-        list.push({
-          ...item,
-          latest_time: getPassedTime(item.latest_time),
-        })
-        return list
-      },
-      []
-    )
-    this.total = page.alltotal
-  }
 
-  private idChange(id: number) {
-    this.selectedId = id
-    this.getVulnDetail()
-  }
   isJSON(str: string) {
     if (typeof str == 'string') {
       try {

@@ -41,11 +41,6 @@ export default () =>
       return request.get('/integration/project/meta', { params })
     }
 
-    vulnList(params: vulnListParams): Promise<iResponse> {
-      // sca_vul_list_content
-      return request.get('/vulns', { params })
-    }
-
     // 漏洞概要
     vulSummaryNum(data?: any): any {
       switch (data.type) {
