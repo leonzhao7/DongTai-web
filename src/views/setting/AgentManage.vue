@@ -275,41 +275,6 @@
               </div>
             </template>
           </el-table-column>
-          <!-- 3   4 -->
-          <el-table-column label="暂停/启用" width="140px">
-            <template slot-scope="{ row }">
-              <el-switch
-                v-if="row.is_control === 0"
-                v-model="row.state === 2 ? 1 : 0"
-                :disabled="row.state === 4"
-                :width="32"
-                style="margin-right: 20px"
-                :active-value="1"
-                :inactive-value="0"
-                @change="
-                  (e) => {
-                    changeCoreControl(row.id, e)
-                  }
-                "
-              ></el-switch>
-              <span
-                v-else
-                style="width: 52px; display: inline-block; padding-left: 10px"
-              >
-                <i class="el-icon-loading"></i>
-              </span>
-              <!-- <el-tooltip
-                class="item"
-                effect="dark"
-                content="下载日志"
-                placement="top"
-              >
-                <el-button type="text" @click="exportAgent(row.id)">
-                  <i class="icon iconfont">&#xe6aa;</i>
-                </el-button>
-              </el-tooltip> -->
-            </template>
-          </el-table-column>
         </el-table>
         <div class="bottom-box">
           <div style="color: rgb(56, 67, 90)">
@@ -911,21 +876,6 @@ export default class AgentManage extends VueBase {
       showClose: true,
     })
     await this.getTableData()
-  }
-
-  async changeCoreControl(id: any, e: any) {
-    let type = 3
-    switch (e) {
-      case 1:
-        type = 3
-        break
-      case 0:
-        type = 4
-        break
-    }
-    await this.update(id, type)
-    // this.reflashTable()
-    this.getTableData()
   }
 }
 </script>

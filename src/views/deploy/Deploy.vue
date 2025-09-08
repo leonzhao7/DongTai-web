@@ -549,7 +549,7 @@ export default class Deploy extends VueBase {
   private uri = window.location.origin + '/openapi'
   private documents = []
   private tagOptions = []
-  private md = {}
+  private md: { [key: string]: string } = {}
   private agentForm: any = {
     entryName: '',
     department: '',
